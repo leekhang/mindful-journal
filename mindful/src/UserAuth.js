@@ -25,15 +25,15 @@ export default class UserAuth extends Component {
                     <p>Enter your information below</p>
                 </header>
 
-                {/* {this.state.errorMessage &&
-                    <p class="alert alert-danger">{this.state.errorMessage}</p>
-                } */}
+                {this.props.userInfo.errorMessage &&
+                    <p class="alert alert-primary">{this.props.userInfo.errorMessage}</p>
+                }
 
                 <main>
                     <Form>
                         <FormGroup>
                             <Label>Email</Label>
-                            <Input type="email" name="email" placeholder="Must be legal email address"
+                            <Input type="email" name="email" placeholder="Enter email (must have proper format)"
                                 value={this.props.userInfo.email}
                                 onChange={(event) => { this.handleChange(event) }} />
                         </FormGroup>
