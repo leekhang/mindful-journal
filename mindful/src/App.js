@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import UserAuth from './UserAuth';
-import UserHome from './UserHome';
+import HomePage from './HomePage';
 import firebase from 'firebase/app';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -19,6 +19,7 @@ class App extends Component {
         this.removeListenerFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
             if (firebaseUser) { //if exists, then logged in
                 console.log("User has logged in: ", firebaseUser.email);
+                console.log('firebaseUser: ' + firebaseUser);
                 this.setState({ user: firebaseUser });
             }
             else {
@@ -80,9 +81,9 @@ class App extends Component {
     }
 
     render() {
-        let callback = () => {
+        let authChecker = () => {
             if (this.state.user) {
-                return (<UserHome signOutCallback={() => { this.handleSignOut() }} />);
+                return (<Redirect to={`/${this.state.username}`} />);
             } else {
                 return (<UserAuth changeCallback={(e) => { this.handleChange(e) }}
                     signUpCallback={() => { this.handleSignUp() }}
@@ -93,7 +94,8 @@ class App extends Component {
         return (
             <div className="App">
                 <Switch> {/* Here is where you would add another page/component with pathway */}
-                    <Route exact path='/' render={() => callback()} />
+                    <Route exact path='/' render={() => authChecker()} />
+                    <Route path='/:username' render={() => <HomePage/>} />
                     <Redirect to='/' /> {/* Redirect to '/' when nonexisting urls are inputted*/}
                 </Switch>
             </div>

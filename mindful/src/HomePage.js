@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
+import ModalScreen from './ModalScreen';
 
 export default class UserHome extends Component {
     handleSignOut() {
@@ -10,6 +11,7 @@ export default class UserHome extends Component {
         return (
             <div>
                 <h1>You are now logged in!</h1>
+                <ModalScreen buttonLabel="Add Journal"/>
                 <Button onClick={() => { this.handleSignOut() }}>Log Out</Button>
             </div>
         );
