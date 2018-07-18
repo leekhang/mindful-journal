@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import HomePage from './HomePage';
 import firebase from 'firebase/app';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import LoginPage from './LoginPage';
-
 
 class App extends Component {
     constructor(props) {
@@ -111,13 +110,11 @@ class App extends Component {
 
         return (
             <div className="App">
-            <BrowserRouter>
                 <Switch> {/* Here is where you would add another page/component with pathway */}
                     <Route exact path='/' render={welcomePageFunction} />
                     <Route path='/:username' render={homePageFunction} />
                     <Redirect to='/' /> {/* Redirect to '/' when nonexisting urls are inputted */}
                 </Switch>
-                </BrowserRouter>
             </div>
         );
     }

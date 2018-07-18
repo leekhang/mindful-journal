@@ -57,17 +57,17 @@ class PageContent extends Component {
 
         {/* THIS IS THE MAIN PAGE */}
         <div className="page-content-wrapper"> 
+            <div className="container-fluid">
+                <div className="login-menu">
+                    <button type="button" className="btn btn-dark" onClick={this.menuToggle}><i className="far fa-bars"></i>Menu</button>
+                </div>
+            </div>
             <WelcomeInfo/>
             <div className="mobile-user"> 
                 <UserInfo email={this.props.userInfo.email} username={this.props.userInfo.username} password={this.props.userInfo.password} change={() => this.handleChange()} signup={()=>this.handleSignUp()} signin={()=>this.handleSignIn()}/>
-                {this.props.userInfo.errorMessage && <p class="alert alert-primary">{this.props.userInfo.errorMessage}</p>}
+                {this.props.userInfo.errorMessage && <p className="alert alert-primary">{this.props.userInfo.errorMessage}</p>}
             </div>
-            <div className="container-fluid">
-                <div className="menu">
-                    <button type="button" className="btn btn-dark" onClick={this.menuToggle}><i className="far fa-bars"></i>Menu</button>
-                </div>
-            {/* Put page content in this div. */}
-            </div>
+
         </div>
       </div>
     );
@@ -98,9 +98,9 @@ class UserInfo extends Component {
                                 value={this.props.username}
                                 onChange={(event) => { this.props.change(event) }} />
                         </FormGroup>
-                        <FormGroup>
-                            <Button onClick={() => { this.props.signup() }}>Sign Up</Button>
-                            <Button onClick={() => { this.props.signin() }}>Sign In</Button>
+                        <FormGroup className="button-group text-center">
+                            <Button className="log-button" onClick={() => { this.props.signup() }}>Sign Up</Button>
+                            <Button className="log-button" onClick={() => { this.props.signin() }}>Sign In</Button>
                         </FormGroup>
                     </Form>
                 </main>
@@ -115,7 +115,7 @@ class WelcomeInfo extends Component {
             <div className="welcome-info">
                 <header className="jumbotron jumbotron-fluid">
                     <h1>Mindful Journal</h1>
-                    <p>Enter your information below</p>
+                    <p>Express yourself</p>
                 </header>
             </div>
         );
