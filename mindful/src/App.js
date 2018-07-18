@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import UserAuth from './UserAuth';
 import HomePage from './HomePage';
 import firebase from 'firebase/app';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import LoginPage from './LoginPage';
 
 class App extends Component {
     constructor(props) {
@@ -89,7 +89,7 @@ class App extends Component {
                 return (<HomePage signOutCallback={() => this.handleSignOut()} />);
                 // return (<Redirect to={`/${this.state.username}`} />);
             } else {
-                return (<UserAuth changeCallback={(e) => { this.handleChange(e) }}
+                return (<LoginPage changeCallback={(e) => { this.handleChange(e) }}
                     signUpCallback={() => { this.handleSignUp() }}
                     signInCallback={() => { this.handleSignIn() }}
                     userInfo={this.state} />);
@@ -101,7 +101,7 @@ class App extends Component {
             if (this.state.user) {
                 return (<HomePage signOutCallback={() => this.handleSignOut()} />);
             } else {
-                return (<UserAuth changeCallback={(e) => { this.handleChange(e) }}
+                return (<LoginPage changeCallback={(e) => { this.handleChange(e) }}
                     signUpCallback={() => { this.handleSignUp() }}
                     signInCallback={() => { this.handleSignIn() }}
                     userInfo={this.state} />);
