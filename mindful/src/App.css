@@ -7,6 +7,17 @@
 /* .page-content-wrapper {
   text-align: center;
 } */
+.happy {
+  color:#fff333;
+}
+
+.sad {
+  color:#3366ff;
+}
+
+.upset{
+  color:#ff3333;
+}
 
 .sidebar-wrapper {
   display:none;

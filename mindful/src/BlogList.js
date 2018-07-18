@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 import BlogPost from './BlogPost';
 
-class BlogPostListContainer extends Component {
-  render() {
-    let postItems = Object.keys(this.props.posts).map((date) => {
-      const title = this.props.posts[date].title;
-      const emotions = this.props.posts[date].emotions;
-      const content = this.props.posts[date].content;
-      return <BlogPost key={date} date={date} title={title} emotions={emotions} content={content} />
-    })
-
-    return <div className='container'>{postItems}</div>
+class BlogList extends Component {
+    render() {
+      let postItems = Object.keys(this.props.posts).map((id) => {
+        const title = this.props.posts[id].title;
+        const emotions = this.props.posts[id].emotions;
+        const content = this.props.posts[id].content;
+        const date = this.props.posts[id].date;
+        return <BlogPost key={id} date={date} title={title} emotions={emotions} content={content} />
+      })
+  
+      return <div className='container'>{postItems}</div>
+    }
   }
-}
-
-export default BlogPostListContainer;
+  
+  export default BlogList;

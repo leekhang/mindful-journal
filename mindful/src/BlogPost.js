@@ -12,7 +12,7 @@ class BlogPost extends Component {
       const date = new Date(this.props.date);
       const title = this.props.title;
       const content = this.props.content;
-      const emotions = this.props.emotions;
+      const emotion = this.props.emotions;
   
       let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
       let numDate = date.getMonth();
@@ -29,9 +29,7 @@ class BlogPost extends Component {
             </div>
             <div className='row'>
                 <div className='col-sm-8 offset-3'>
-                    {emotions.map(emotion => 
-                      <span className='emation-tags d-inline-block badge badge-secondary mr-2 hover' key={emotion}>{emotion}</span>
-                    )}
+                    <span className='emation-tags d-inline-block badge badge-secondary mr-2' key={emotion}>{emotion}</span>
                     <p className='post-content blog-post-meta'>{content}</p>  
                 </div>
             </div>
