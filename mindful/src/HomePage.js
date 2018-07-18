@@ -5,6 +5,7 @@ import ModalScreen from './ModalScreen';
 export default class UserHome extends Component {
     handleSignOut() {
         this.props.signOutCallback();
+        
     }
     // Renders the view of the home screen for the user
     render() {

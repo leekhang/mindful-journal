@@ -65,6 +65,9 @@ class App extends Component {
         this.setState({ errorMessage: null }); //clear old error
 
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+            // THEN pull user journal entries from database
+            // pass this as prop into homepage to render journal entries
+            // .then(firebase.database)
             .catch((err) => {
                 console.log(err);
                 this.setState({ errorMessage: err.message });
@@ -81,9 +84,10 @@ class App extends Component {
     }
 
     render() {
-        let authChecker = () => {
+        let welcomePageFunction = (routerProps) => {
             if (this.state.user) {
-                return (<Redirect to={`/${this.state.username}`} />);
+                return (<HomePage signOutCallback={() => this.handleSignOut()} />);
+                // return (<Redirect to={`/${this.state.username}`} />);
             } else {
                 return (<UserAuth changeCallback={(e) => { this.handleChange(e) }}
                     signUpCallback={() => { this.handleSignUp() }}
@@ -91,12 +95,25 @@ class App extends Component {
                     userInfo={this.state} />);
             }
         };
+
+        // NEED TO CHECK THIS FUNCTION
+        let homePageFunction = () => {
+            if (this.state.user) {
+                return (<HomePage signOutCallback={() => this.handleSignOut()} />);
+            } else {
+                return (<UserAuth changeCallback={(e) => { this.handleChange(e) }}
+                    signUpCallback={() => { this.handleSignUp() }}
+                    signInCallback={() => { this.handleSignIn() }}
+                    userInfo={this.state} />);
+            }
+        }
+
         return (
             <div className="App">
                 <Switch> {/* Here is where you would add another page/component with pathway */}
-                    <Route exact path='/' render={() => authChecker()} />
-                    <Route path='/:username' render={() => <HomePage/>} />
-                    <Redirect to='/' /> {/* Redirect to '/' when nonexisting urls are inputted*/}
+                    <Route exact path='/' render={welcomePageFunction} />
+                    <Route path='/:username' render={homePageFunction} />
+                    <Redirect to='/' /> {/* Redirect to '/' when nonexisting urls are inputted */}
                 </Switch>
             </div>
         );
@@ -104,3 +121,4 @@ class App extends Component {
 }
 
 export default App;
+
