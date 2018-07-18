@@ -10,7 +10,6 @@ class BlogList extends Component {
       const date = this.props.posts[id].date;
       return <BlogPost key={id} date={date} title={title} emotions={emotions} content={content} />
     })
-
     return <div className='container'>{postItems}</div>
   }
 }

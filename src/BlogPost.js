@@ -29,7 +29,7 @@ class BlogPost extends Component {
             </div>
             <div className='row'>
                 <div className='col-sm-8 offset-3'>
-                    <span className='emation-tags d-inline-block badge badge-secondary mr-2' key={emotion}>{emotion}</span>
+                    <span className={'emotion-tags d-inline-block badge badge-' + 'secondary' + ' mr-2'} key={emotion}>{emotion}</span>
                     <p className='post-content blog-post-meta'>{content}</p>  
                 </div>
             </div>

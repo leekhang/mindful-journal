@@ -190,9 +190,10 @@ class DateList extends Component {
 
 class Emotes extends Component {
   render() {
+    let emoteName = this.props.emote;
     return(
-      <li className="emotes">
-        <a>{this.props.emote}</a>
+      <li  className={emoteName}>
+        <a>{emoteName}</a>
       </li>
     );
   }
