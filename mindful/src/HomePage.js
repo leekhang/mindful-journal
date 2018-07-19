@@ -6,6 +6,7 @@ import BlogList from './BlogList';
 import BlogFilterList from './BlogFilterList';
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 import _ from 'lodash';
+import firebase from 'firebase/app';
 
 
 const BLOG_POSTS = { //model for demoing
@@ -29,41 +30,36 @@ const BLOG_POSTS = { //model for demoing
   }
 };
 
+//This component renders the page shown to users after they log in.
 export default class UserHome extends Component {
-  constructor(props) {
-    super(props);
-    console.log(this.props);
-    this.state = {
-      years: [],
-      months: [],
-      emotions: [],
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        years: [],
+        months: [],
+        emotions: ['Happy', 'Excited', 'Calm', 'Afraid', 'Sad', 'Disgusted', 'Angry'],
+        allEntries: []
+      }
     }
-  }
 
   handleSignOut() {
     this.props.signOutCallback();
   }
 
-  componentDidMount() {
-    // need ot change this!!
-    let groupedPostsDate = _.groupBy(BLOG_POSTS, 'date');
-    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-    var arrDate = Object.keys(groupedPostsDate).map(date => {
-      return new Date(date);
-    });
-    let arrMonths = Object.keys(groupedPostsDate).map(date => {
-      let dates = new Date(date).getMonth();
-      return months[dates];
-    });
-    this.setState({ months: arrMonths });
-
-    let groupedPostsEmots = _.groupBy(BLOG_POSTS, 'emotions');
-    let arrEmot = Object.keys(groupedPostsEmots);
-    this.setState({ emotions: arrEmot });
-    this.setState({ blogposts: BLOG_POSTS });
+  componentWillUnmount() {
+    this.unregFunc.off();
   }
 
+  //Manages the date and emotions that are relative to the user.
+  componentDidMount() {
+    this.unregFunc = firebase.database().ref(`users/${this.props.userId}/`);
+        this.unregFunc.on('value', (snapshot) => {
+            this.setState({ allEntries: snapshot.val() });
+        });
+  }
+
+  //Toggles sidebar for desktop
   menuToggle(e) {
     e.preventDefault();
     let wrapper = document.querySelector('.wrapper');
@@ -76,47 +72,69 @@ export default class UserHome extends Component {
 
   // Renders the view of the home screen for the user
   render() {
-    //Blog Post Code
-    /*
-    let postLinks = Object.keys(BLOG_POSTS).map((month) => {
-        return (
-        <li key={month}>
-          <a to={'/blog/posts/month'+month} className="nav-link">{date}</a>
-        </li>
-        )
-      });
-    */
-    let sad = 'sad';
+    let posts = this.props.posts;
+    let groupedPostsDate = _.groupBy(posts, 'date');
+    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    var arrDate = Object.keys(groupedPostsDate).map(date => {
+      return new Date(date);
+    });
+    let arrMonths = Object.keys(groupedPostsDate).map(date => {
+      let dates = new Date(date).getMonth();
+      return months[dates];
+    });
+    function removeDuplicates(array){
+        let uniqueArray = [];
+        for(let i = 0; i < array.length; i++){
+            if(uniqueArray.indexOf(array[i]) === -1){
+                uniqueArray.push(array[i]);
+            }
+        }
+        return uniqueArray;
+    }
+    let arrUniqueMonths = removeDuplicates(arrMonths);
+
+    let groupedPostsEmots = _.groupBy(posts, 'emotions');
+    let arrEmot = Object.keys(groupedPostsEmots);
 
     return (
       <div className="App">
         <main>
           <div className="wrapper toggled">
             <div className="sidebar-wrapper">
-              <SideBar userId={this.props.userId} logout={() => this.handleSignOut()} years={this.state.years} months={this.state.months} emotes={this.state.emotions} />
+              <SideBar 
+                userId={this.props.userId} 
+                logout={() => this.handleSignOut()} 
+                years={this.state.years} 
+                months={arrUniqueMonths} 
+                emotes={arrEmot}
+                posts={this.state.allEntries}
+              />
             </div>
 
             <div className="page-content-wrapper">
-              {/* <div>
-                <h1>You are now logged in!</h1>
-                <ModalScreen buttonLabel="Add Journal"/>
-                <ModalScreen buttonLabel="Edit Journal"/>
-                <Button onClick={() => { this.handleSignOut() }}>Log Out</Button>
-              </div> */}
-
+              <MobileNav 
+                logout={()=>this.handleSignOut()} 
+                years={this.state.years} 
+                months={arrUniqueMonths} 
+                emotes={arrEmot}
+                posts={this.state.allEntries}
+              />         
               <div className="container-fluid">
                 <div className="menu">
-                  <button type="button" className="btn btn-dark" onClick={this.menuToggle}><i className="far fa-bars"></i>Menu</button>
+                  <button 
+                  type="button" 
+                  className="btn desktop-button"
+                  onClick={this.menuToggle}>
+                  Menu
+                  </button>
                 </div>
               </div>
               <Switch>
-                <Route exact path='/blog/posts/:attr' render={(routerProps) => <BlogFilterList {...routerProps} posts={BLOG_POSTS} />} />
-                <Route path='/' render={(routerProps) => <BlogList {...routerProps} posts={BLOG_POSTS} />} />
-                <Route path='/blog' render={(routerProps) => <BlogList {...routerProps} posts={BLOG_POSTS} />} />
+                  <Route exact path='/blog/posts/:attr' render={(routerProps) => <BlogFilterList {...routerProps} posts={this.state.allEntries}/> }/>
+                  <Route path='/' render={(routerProps) => <BlogList {...routerProps} posts={this.state.allEntries}/> }/>
+                  <Route path='/blog' render={(routerProps) => <BlogList {...routerProps} posts={this.state.allEntries}/> }/>
               </Switch>
-              {/*<BlogList posts={BLOG_POSTS}/>*/}
-
-
             </div>
           </div>
         </main>
@@ -125,42 +143,75 @@ export default class UserHome extends Component {
   }
 }
 
+//Renders the sidebar navigation for desktop
 class SideBar extends Component {
   render() {
-    return (
-      <ul className="sidebar-nav">
-        <li><a className="user bold" href="">John Appleseed</a></li>
-        <li><p className="secondary">Personal Journal</p></li>
 
-        <div className="entry">
+    return (
+      <ul className="sidebar-nav" role="navigation">
+        <li>
+          <a className="user space" href="">Mindful</a>
+        </li>
+        <li>
+          <p className="secondary">Personal Journal</p>
+        </li>
+        <div className="entry space">
           <ModalScreen type='add' buttonLabel='Add Journal' userId={this.props.userId} /> 
         </div>
-
-        <li><Link to='/blog' className="year bold">2018</Link></li>
-
-        <DateList years={this.props.years} months={this.props.months} />
-
-        <li><Link className='bold' to='/blog'>Emotion Filters</Link></li>
-
-        <EmoteList emotes={this.props.emotes} />
-
-        <li><a className="bold" onClick={() => this.props.logout()}>Log Out</a></li>
+        <li><Link to='/blog' className="year space">2018</Link></li>
+          <DateList months={this.props.months} />
+        <li><Link className='space' to='/blog'>Emotion Filters</Link></li>
+          <EmoteList emotes={this.props.emotes} />
+        <li><a href="" className="space" onClick={() => this.props.logout()}>Log Out</a></li>
       </ul>
     );
   }
 }
 
+//Renders the top navbar for mobile
+class MobileNav extends Component {
+  render() {
+      return (
+        <div className="mobile-nav">
+          <nav className="navbar navbar-expand-lg navbar-dark" role="navigation">
+              <span><a className="navbar-brand" href="#">Mindful</a></span>
+                <ModalScreen type='add' buttonLabel='Add Journal' userId={this.props.userId} />
+              <div className="dropdown">
+                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Date
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <DateList months={this.props.months} />
+                </div>
+              </div>
+              <div className="dropdown">
+                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Emotions
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <EmoteList emotes={this.props.emotes} />
+                </div>
+                <a href="" className="home-logout" onClick={()=>this.props.logout()}>Log Out</a>
+              </div>
+            </nav>
+          </div>
+      );
+  }
+}
+
+//This renders an html element for each month relative to the user
 class Month extends Component {
   render() {
     let month = this.props.month;
     return (
-      <li key={month}>
+      <li key={this.props.month}>
         <NavLink to={'/blog/posts/' + month} activeClassName='bg-secondary'>{month}</NavLink>
       </li>
     );
   }
 }
 
+//This renders an html element for all the months.
 class DateList extends Component {
   render() {
     let monthArray = this.props.months.map((month) => {
@@ -175,6 +226,7 @@ class DateList extends Component {
   }
 }
 
+//This renders an html element for each emotion relative to the user.
 class Emotes extends Component {
   render() {
     let emote = this.props.emote;
@@ -185,6 +237,8 @@ class Emotes extends Component {
     );
   }
 }
+
+//This renders all the emotions for the user.
 class EmoteList extends Component {
   render() {
     let emoteArray = this.props.emotes.map((emote) => {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 
+
+//This component renders the page where users first login/signup.
 class LoginPage extends Component {
 
   render() {
@@ -19,7 +21,7 @@ class LoginPage extends Component {
   }
 }
 
-//Bootstrap sidebar example
+//This component renders the whole login page content.
 class PageContent extends Component {
 
     handleChange(event) {
@@ -44,36 +46,51 @@ class PageContent extends Component {
         }
     }
 
-  render() {
-    return(
-
-      <div className="wrapper toggled">
-        
-        {/* THIS IS THE SIDEBAR */}
-        <div className="sidebar-wrapper">
-            <UserInfo email={this.props.userInfo.email} username={this.props.userInfo.username} password={this.props.userInfo.password} change={(e) => this.handleChange(e)} signup={()=>this.handleSignUp()} signin={()=>this.handleSignIn()}/>
-            {this.props.userInfo.errorMessage && <p className="alert alert-primary">{this.props.userInfo.errorMessage}</p>}
-        </div>  
-
-        {/* THIS IS THE MAIN PAGE */}
-        <div className="page-content-wrapper"> 
-            <div className="container-fluid">
-                <div className="login-menu">
-                    <button type="button" className="btn btn-dark" onClick={this.menuToggle}><i className="far fa-bars"></i>Menu</button>
+    //This renders the layout between mobile and desktop login.
+    render() {
+        return(
+        <div className="wrapper toggled">
+                <div className="sidebar-wrapper">
+                    <UserInfo 
+                        email={this.props.userInfo.email} 
+                        username={this.props.userInfo.username} 
+                        password={this.props.userInfo.password} 
+                        change={(e) => this.handleChange(e)} 
+                        signup={()=>this.handleSignUp()} 
+                        signin={()=>this.handleSignIn()}
+                    />
+                    {this.props.userInfo.errorMessage && <p className="alert alert-primary">{this.props.userInfo.errorMessage}</p>}
+                </div>  
+                <div className="page-content-wrapper"> 
+                    <div className="container-fluid">
+                        <div className="login-menu">
+                            <button 
+                                type="button" 
+                                className="btn btn-dark" 
+                                onClick={this.menuToggle}>
+                                Menu
+                            </button>
+                        </div>
+                    </div>
+                    <WelcomeInfo/>
+                    <div className="mobile-user"> 
+                        <UserInfo 
+                            email={this.props.userInfo.email} 
+                            username={this.props.userInfo.username} 
+                            password={this.props.userInfo.password} 
+                            change={(e) => this.handleChange(e)} 
+                            signup={()=>this.handleSignUp()} 
+                            signin={()=>this.handleSignIn()}
+                        />
+                        {this.props.userInfo.errorMessage && <p className="alert alert-primary">{this.props.userInfo.errorMessage}</p>}
+                    </div>
                 </div>
             </div>
-            <WelcomeInfo/>
-            <div className="mobile-user"> 
-                <UserInfo email={this.props.userInfo.email} username={this.props.userInfo.username} password={this.props.userInfo.password} change={() => this.handleChange()} signup={()=>this.handleSignUp()} signin={()=>this.handleSignIn()}/>
-                {this.props.userInfo.errorMessage && <p className="alert alert-primary">{this.props.userInfo.errorMessage}</p>}
-            </div>
-
-        </div>
-      </div>
-    );
-  }
+        );
+    }
 }
     
+//This component renders the signup/login form.
 class UserInfo extends Component {
     render() {
         return(
@@ -82,15 +99,23 @@ class UserInfo extends Component {
                     <Form>
                         <FormGroup>
                             <Label>Email</Label>
-                            <Input type="email" name="email" placeholder="Enter email (must have proper format)"
+                            <Input 
+                                type="email" 
+                                name="email" 
+                                placeholder="Enter email"
                                 value={this.props.email}
-                                onChange={(event) => { this.props.change(event) }} />
+                                onChange={(event) => { this.props.change(event) }} 
+                            />
                         </FormGroup>
                         <FormGroup>
                             <Label>Password</Label>
-                            <Input type="password" name="password" placeholder="Enter password"
+                            <Input 
+                                type="password" 
+                                name="password" 
+                                placeholder="Enter password"
                                 value={this.props.password}
-                                onChange={(event) => { this.props.change(event) }} />
+                                onChange={(event) => { this.props.change(event) }} 
+                            />
                         </FormGroup>
                         <FormGroup>
                             <Label>Username</Label>
@@ -99,8 +124,16 @@ class UserInfo extends Component {
                                 onChange={(event) => { this.props.change(event) }} />
                         </FormGroup>
                         <FormGroup className="button-group text-center">
-                            <Button className="log-button" onClick={() => { this.props.signup() }}>Sign Up</Button>
-                            <Button className="log-button" onClick={() => { this.props.signin() }}>Sign In</Button>
+                            <Button 
+                            className="log-button" 
+                            onClick={() => { this.props.signup() }}>
+                            Sign Up
+                            </Button>
+                            <Button 
+                            className="log-button" 
+                            onClick={() => { this.props.signin() }}>
+                            Sign In
+                            </Button>
                         </FormGroup>
                     </Form>
                 </main>
@@ -109,6 +142,7 @@ class UserInfo extends Component {
     }
 }
 
+//This component renders the welcome section including the name of our app and description.
 class WelcomeInfo extends Component {
     render() {
         return(

@@ -128,7 +128,7 @@ class ModalScreen extends Component {
                  value={this.props.entry.body}
                  onChange={(value) => this.handleBody(value)}
                />;
-      toggleBtn = <Button color="info" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+      toggleBtn = <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
       deleteBtn = <Button color="danger" onClick={this.handleDelete}>Delete</Button>;
     }
     saveBtn = this.saveButtonRender();
@@ -157,13 +157,17 @@ class ModalScreen extends Component {
                 <DropdownMenu>
                   <DropdownItem id="Happy" onClick={(event) => this.handleEmotion(event)}>Happy</DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem id="Sad" onClick={(event) => this.handleEmotion(event)}>Sad</DropdownItem>
+                  <DropdownItem id="Excited" onClick={(event) => this.handleEmotion(event)}>Excited</DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem id="Angry" onClick={(event) => this.handleEmotion(event)}>Angry</DropdownItem>
+                  <DropdownItem id="Calm" onClick={(event) => this.handleEmotion(event)}>Calm</DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem id="Afraid" onClick={(event) => this.handleEmotion(event)}>Afraid</DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem id="Sad" onClick={(event) => this.handleEmotion(event)}>Sad</DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem id="Disgusted" onClick={(event) => this.handleEmotion(event)}>Disgusted</DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem id="Excited" onClick={(event) => this.handleEmotion(event)}>Excited</DropdownItem>
+                  <DropdownItem id="Angry" onClick={(event) => this.handleEmotion(event)}>Angry</DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
               <div>
@@ -175,7 +179,7 @@ class ModalScreen extends Component {
             {saveBtn}
             {' '}
             {deleteBtn}
-            <Button color="secondary" onClick={this.handleClose}>Cancel</Button>
+            <Button color="danger" onClick={this.handleClose}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>
