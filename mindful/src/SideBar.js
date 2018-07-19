@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
+  
+  /*constructor(props) {
     super(props);
 
     this.state = {
@@ -10,7 +11,7 @@ class App extends Component {
       months:['July', 'June', 'May'],
       emotes:['#E7E7E7', '#3C4140', '#FF5151', '#FECC35', '#83E33F', '#80A4ED', '#F392FF']
     }
-  }
+  }*/
 
   render() {
     return (
