@@ -11,14 +11,14 @@ class BlogPost extends Component {
   render() {
 
     //console.log(this.props.match.params);
-    var posts = this.props.entry;
+    var post = this.props.entry;
     let id = this.props.userId;
     //console.log(id);
 
-    let date = new Date(posts.date);
-    let title = posts.title;
-    let content = posts.content;
-    let emotion = posts.emotions;
+    let date = new Date(post.date);
+    let title = post.title;
+    let content = post.body;
+    let emotion = post.emotion;
 
     let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     let numDate = date.getMonth();
@@ -43,7 +43,7 @@ class BlogPost extends Component {
         <div className='row'>
           <div className='col-sm-8 offset-3'>
             <h5><span className='emation-tags d-inline-block badge badge-secondary mr-2' key={emotion}>{emotion}</span></h5>
-            <p className='post-content blog-post-meta'>{content}</p>
+            <div className='post-content blog-post-meta' dangerouslySetInnerHTML={{__html: content + ''}} />
           </div>
         </div>
       </div>

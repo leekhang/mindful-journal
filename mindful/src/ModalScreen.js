@@ -198,6 +198,7 @@ class ModalScreen extends Component {
   handleDelete(event) {
     console.log(this.props.userId);
     let userJournals = firebase.database().ref(`users/${this.props.userId}/${this.props.entry.id}`);
+    console.log(this.props.entry.id);
     let deleteEntry = {};
     deleteEntry[this.props.entry.id] = null;
     userJournals.set(deleteEntry).catch(console.log);

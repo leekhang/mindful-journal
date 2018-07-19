@@ -5,13 +5,14 @@ class BlogList extends Component {
 
     render() {
       let posts = this.props.posts;
+      let userId = this.props.userId;
       let postItems = Object.keys(posts).map(function(key) {
         let postKey = key; 
         let postValue = posts[key];
         postValue.id = postKey;
         //console.log(postKey);
         //console.log(postValue.id);
-        return <BlogPost key={postValue.id} userId={postValue.id} entry={postValue} />
+        return <BlogPost key={postValue.id} userId={userId} entry={postValue} />
       })
   
       return <div className='container'>{postItems}</div>

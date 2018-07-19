@@ -3,6 +3,7 @@ import BlogPost from './BlogPost';
 
 class BlogFilterList extends Component {
     render() {
+        console.log(this.props.userId);
         let filterAttr = this.props.match.params.attr;
         //let filterAttr = this.props.attr;
         let blogPosts = this.props.posts;
@@ -27,7 +28,7 @@ class BlogFilterList extends Component {
         });
 
       let postItems = filterPosts.map((entry) => {
-        return <BlogPost key={entry.id} userId={entry.id} entry={entry} />
+        return <BlogPost key={entry.id} userId={this.props.userId} entry={entry} />
       })
 
       return (
