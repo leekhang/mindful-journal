@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import React, { Component } from 'react';
 import BlogList from './BlogList';
 import BlogFilterList from './BlogFilterList'; 
-import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import _ from 'lodash';
 import {SideBar, MobileNav} from './Navigation';
 
