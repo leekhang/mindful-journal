@@ -6,6 +6,10 @@
   margin: 20px;
 }
 
+.modal-title {
+  color:black;
+}
+
 .space {
   margin-top:30px;
 }
@@ -154,20 +158,12 @@ label {
   margin-top: 10px;
 }
 
-.bold {
-  margin-top: 20px;
-  font-weight: bolder;
-}
-
 .secondary {
   color: #999999;
 }
 
 .sidebar-nav li a:active, .sidebar-nav li a:focus {
   text-decoration: none;
-}
-
-  /* Has to be one of three things, WelcomeInfo, UserInfo, Sidebar */
 }
 
 @media (min-width:768px) {
@@ -196,4 +192,5 @@ label {
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
 }

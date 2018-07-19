@@ -30,12 +30,11 @@ class BlogPost extends Component {
         
           <div className='col-sm-2 offset-1'>
             <span className='date blog-post-meta text-muted'>{months[numDate]} {date.getDate()}</span>
+            <ModalScreen buttonLabel='Edit' type='edit' userId={id} entry={this.props.entry} />
           </div>
           
           <div className='col-sm-9'>
-
             <h2 className='post-title blog-post-title'>{title}</h2>
-            <ModalScreen buttonLabel='Edit' type='edit' userId={id} entry={this.props.entry} />
           </div>
           
         </div>

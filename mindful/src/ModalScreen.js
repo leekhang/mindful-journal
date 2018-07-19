@@ -141,11 +141,11 @@ class ModalScreen extends Component {
           <ModalBody>
             <form onSubmit={this.handleSubmit}>
               <div className="inputs">
-                <label>
+                <label className="modal-title">
                   Title:
                   <input type="text" value={this.state.title} onChange={this.handleTitleChange} />
                 </label>
-                <label>
+                <label className="modal-title">
                   Date:
                   <input type="date" value={this.state.date} onChange={this.handleDateChange} />
                 </label>
