@@ -4,7 +4,8 @@ import BlogList from './BlogList';
 import BlogFilterList from './BlogFilterList'; 
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 import _ from 'lodash';
-import {SideBar, MobileNav} from './Navigation'
+import {SideBar, MobileNav} from './Navigation';
+
 
 const BLOG_POSTS = { //model for demoing
     'alskjdldskjflsakjdz': {
@@ -33,9 +34,6 @@ export default class UserHome extends Component {
       super(props);
 
       this.state = {
-        years: [],
-        months: [],
-        emotions: ['Happy', 'Excited', 'Calm', 'Afraid', 'Sad', 'Disgusted', 'Angry'],
         allEntries: []
       }
     }
@@ -68,54 +66,41 @@ export default class UserHome extends Component {
 
   // Renders the view of the home screen for the user
   render() {
-    let posts = this.props.posts;
+    let posts = this.state.allEntries;
     let groupedPostsDate = _.groupBy(posts, 'date');
     let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    
+        
     var arrDate = Object.keys(groupedPostsDate).map(date => {
       return new Date(date);
     });
     let arrMonths = Object.keys(groupedPostsDate).map(date => {
-      let dates = new Date(date).getMonth();
+     let dates = new Date(date).getMonth();
       return months[dates];
     });
     function removeDuplicates(array){
-        let uniqueArray = [];
+      let uniqueArray = [];
         for(let i = 0; i < array.length; i++){
-            if(uniqueArray.indexOf(array[i]) === -1){
-                uniqueArray.push(array[i]);
-            }
+          if(uniqueArray.indexOf(array[i]) === -1){
+            uniqueArray.push(array[i]);
+          }
         }
-        return uniqueArray;
+      return uniqueArray;
     }
     let arrUniqueMonths = removeDuplicates(arrMonths);
 
-    let groupedPostsEmots = _.groupBy(posts, 'emotions');
+    let groupedPostsEmots = _.groupBy(posts, 'emotion');
     let arrEmot = Object.keys(groupedPostsEmots);
-
+    
     return (
       <div className="App">
         <main>
           <div className="wrapper toggled">
             <div className="sidebar-wrapper">
-              <SideBar 
-                userId={this.props.userId} 
-                logout={() => this.handleSignOut()} 
-                years={this.state.years} 
-                months={arrUniqueMonths} 
-                emotes={arrEmot}
-                posts={this.state.allEntries}
-              />
+              <SideBar userId={this.props.userId} logout={()=>this.handleSignOut()} months={arrUniqueMonths} emotes={arrEmot} />
             </div>
 
             <div className="page-content-wrapper">
-              <MobileNav 
-                logout={()=>this.handleSignOut()} 
-                years={this.state.years} 
-                months={arrUniqueMonths} 
-                emotes={arrEmot}
-                posts={this.state.allEntries}
-              />         
+              <MobileNav userId={this.props.userId} logout={()=>this.handleSignOut()} months={arrUniqueMonths} emotes={arrEmot} />         
               <div className="container-fluid">
                 <div className="menu">
                   <button 
@@ -138,5 +123,3 @@ export default class UserHome extends Component {
       );
     }
   }
-
-
