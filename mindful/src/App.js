@@ -19,10 +19,8 @@ class App extends Component {
         this.removeListenerFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
             if (firebaseUser) { //if exists, then logged in
                 console.log("User has logged in: ", firebaseUser.email);
-                console.log('firebaseUser: ' + firebaseUser);
                 this.setState({ user: firebaseUser });
-            }
-            else {
+            } else {
                 console.log("User has logged out");
                 this.setState({ user: undefined });
             }
@@ -84,9 +82,15 @@ class App extends Component {
     }
 
     render() {
+        if (this.state.user) console.log(firebase.auth().currentUser.uid);
         let welcomePageFunction = (routerProps) => {
             if (this.state.user) {
-                return (<HomePage signOutCallback={() => this.handleSignOut()} />);
+                return (
+                    <HomePage 
+                        userId={firebase.auth().currentUser.uid}
+                        signOutCallback={() => this.handleSignOut()}
+                    />
+                );
                 // return (<Redirect to={`/${this.state.username}`} />);
             } else {
                 return (<UserAuth changeCallback={(e) => { this.handleChange(e) }}
@@ -99,12 +103,22 @@ class App extends Component {
         // NEED TO CHECK THIS FUNCTION
         let homePageFunction = () => {
             if (this.state.user) {
-                return (<HomePage signOutCallback={() => this.handleSignOut()} />);
+                return (
+                    <HomePage 
+                        userId={firebase.auth().currentUser.uid}
+                        signOutCallback={() => this.handleSignOut()}
+                    />
+                );
             } else {
-                return (<UserAuth changeCallback={(e) => { this.handleChange(e) }}
-                    signUpCallback={() => { this.handleSignUp() }}
-                    signInCallback={() => { this.handleSignIn() }}
-                    userInfo={this.state} />);
+                return (
+                    <UserAuth
+                        changeCallback={(e) => { this.handleChange(e) }}
+                        signUpCallback={() => { this.handleSignUp() }}
+                        signInCallback={() => { this.handleSignIn() }}
+                        userInfo={this.state}
+                    />
+                
+                );
             }
         }
 
