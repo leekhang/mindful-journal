@@ -111,7 +111,7 @@ export default class UserHome extends Component {
                   </button>
                 </div>
               </div>
-              <Switch>
+              <Switch basename={process.env.PUBLIC_URL+'/'}>
                   <Route exact path='/blog/posts/:attr' render={(routerProps) => <BlogFilterList {...routerProps} userId={this.props.userId} posts={this.state.allEntries}/> }/>
                   <Route path='/' render={(routerProps) => <BlogList {...routerProps} userId={this.props.userId} posts={this.state.allEntries}/> }/>
                   <Route path='/blog' render={(routerProps) => <BlogList {...routerProps} userId={this.props.userId} posts={this.state.allEntries}/> }/>
