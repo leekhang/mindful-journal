@@ -6,7 +6,6 @@ import BlogList from './BlogList';
 import BlogFilterList from './BlogFilterList'; 
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 import _ from 'lodash';
-import firebase from 'firebase/app';
 
 
 const BLOG_POSTS = { //model for demoing
@@ -49,23 +48,13 @@ export default class UserHome extends Component {
     componentWillUnmount() {
         this.unregFunc.off();
     }
-
-    componentDidMount() {
-        this.unregFunc = firebase.database().ref(`users/${this.props.userId}/`);
-        this.unregFunc.on('value', (snapshot) => {
-            this.setState({ allEntries: snapshot.val() });
-        });
-
-  componentWillUnmount() {
-    this.unregFunc.off();
-  }
-
+      
   //Manages the date and emotions that are relative to the user.
   componentDidMount() {
     this.unregFunc = firebase.database().ref(`users/${this.props.userId}/`);
-        this.unregFunc.on('value', (snapshot) => {
-            this.setState({ allEntries: snapshot.val() });
-        });
+      this.unregFunc.on('value', (snapshot) => {
+          this.setState({ allEntries: snapshot.val() });
+      });
   }
 
   //Toggles sidebar for desktop
@@ -77,6 +66,7 @@ export default class UserHome extends Component {
     } else {
       wrapper.classList.add('toggled');
     }
+  }
 
   // Renders the view of the home screen for the user
   render() {
@@ -145,16 +135,16 @@ export default class UserHome extends Component {
               </Switch>
             </div>
             </div>
-            </main>
-            </div>
-        );
+          </main>
+        </div>
+      );
     }
-}
+  }
+
 
 //Renders the sidebar navigation for desktop
 class SideBar extends Component {
   render() {
-
     return (
       <ul className="sidebar-nav" role="navigation">
         <li>
