@@ -157,13 +157,17 @@ class ModalScreen extends Component {
                 <DropdownMenu>
                   <DropdownItem id="Happy" onClick={(event) => this.handleEmotion(event)}>Happy</DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem id="Sad" onClick={(event) => this.handleEmotion(event)}>Sad</DropdownItem>
+                  <DropdownItem id="Excited" onClick={(event) => this.handleEmotion(event)}>Excited</DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem id="Angry" onClick={(event) => this.handleEmotion(event)}>Angry</DropdownItem>
+                  <DropdownItem id="Calm" onClick={(event) => this.handleEmotion(event)}>Calm</DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem id="Afraid" onClick={(event) => this.handleEmotion(event)}>Afraid</DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem id="Sad" onClick={(event) => this.handleEmotion(event)}>Sad</DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem id="Disgusted" onClick={(event) => this.handleEmotion(event)}>Disgusted</DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem id="Excited" onClick={(event) => this.handleEmotion(event)}>Excited</DropdownItem>
+                  <DropdownItem id="Angry" onClick={(event) => this.handleEmotion(event)}>Angry</DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
               <div>
