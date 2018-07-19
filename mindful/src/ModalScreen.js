@@ -53,6 +53,7 @@ class ModalScreen extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.handleBody = this.handleBody.bind(this);
+    this.saveButtonRender = this.saveButtonRender.bind(this);
     
     // binding buttons/submissions for form
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -94,9 +95,19 @@ class ModalScreen extends Component {
   }
 
   saveButtonRender() {
-    let body = this.state.body.replace(' ', ''); 
-    let emptyConditions = (this.state.title === '') || (this.state.date === '') || (body === '');
-    if (emptyConditions) {
+    let emptyConditions = (this.state.title === '') 
+                          || (this.state.date === '') 
+                          || (this.state.body === '');
+    let unChangedConditions;
+    if (this.props.type === 'edit') {
+      unChangedConditions = (this.state.title === this.props.entry.title) 
+                          && (this.state.date === this.props.entry.date) 
+                          && (this.state.body === this.props.entry.body);
+    } else {
+      unChangedConditions = true;
+    }
+    
+    if (emptyConditions || unChangedConditions) {
       return <Button color="danger" disabled onClick={this.handleSave}>Save</Button>;
     } else {
       return <Button color="danger" onClick={this.handleSave}>Save</Button>;
@@ -104,7 +115,7 @@ class ModalScreen extends Component {
   }
 
   render() {
-    let editor, deleteBtn;
+    let editor, deleteBtn, saveBtn;
     if (this.props.type === 'add') {
       editor = <ModalEditor
                  type={this.props.type}
@@ -118,6 +129,7 @@ class ModalScreen extends Component {
                />;
       deleteBtn = <Button color="danger" onClick={this.handleDelete}>Delete</Button>;
     }
+    saveBtn = this.saveButtonRender();
 
     return (
       <div>
@@ -158,7 +170,7 @@ class ModalScreen extends Component {
             </form>
           </ModalBody>
           <ModalFooter>
-            {this.saveButtonRender()}
+            {saveBtn}
             {' '}
             {deleteBtn}
             <Button color="secondary" onClick={this.handleClose}>Cancel</Button>
