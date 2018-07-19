@@ -1,25 +1,188 @@
-.App {
+/*!
+ * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
+ */
+
+/* .page-content-wrapper {
+  text-align: center;
+} */
+.happy {
+  color:#fff333;
+}
+
+.sad {
+  color:#3366ff;
+}
+
+.upset{
+  color:#ff3333;
+}
+
+.sidebar-wrapper {
+  display:none;
+}
+
+.user-info {
+  margin: 20px;
+}
+
+.login-menu {
+  padding-bottom: 20px;
+  text-indent: -14px;
+  display:none;
+}
+
+.log-button {
+  margin: 5px;
+}
+
+.button-group {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+@media (min-width:598px) {
+.sidebar-wrapper {
+  display:block;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+.mobile-user {
+  display:none;
+}
+
+.login-menu {
+  display:block;
+}
+.menu {
+  display:block;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.wrapper.toggled {
+  padding-left: 250px;
+}
+
+.sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: #000;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.wrapper.toggled .sidebar-wrapper {
+  width: 250px;
+}
+
+.page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+}
+
+.wrapper.toggled .page-content-wrapper {
+  position: absolute;
+  margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav li {
+  text-indent: 20px;
+  line-height: 30px;
+}
+
+.sidebar-nav li a {
+  display: block;
+  text-decoration: none;
   color: white;
 }
 
-.App-title {
-  font-size: 1.5em;
+.sidebar-nav li a:hover {
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
 }
 
-.App-intro {
-  font-size: large;
+label {
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+
+.entry {
+  text-indent: 20px;
+}
+
+.user {
+  font-size: 25px;
+  margin-top: 10px;
+}
+
+.bold {
+  margin-top: 20px;
+  font-weight: bolder;
+}
+
+.secondary {
+  color: #999999;
+}
+
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+  /* Has to be one of three things, WelcomeInfo, UserInfo, Sidebar */
+}
+
+@media (min-width:768px) {
+  .wrapper {
+    padding-left: 0;
+  }
+  .wrapper.toggled {
+    padding-left: 250px;
+  }
+  .sidebar-wrapper {
+    width: 0;
+  }
+  .wrapper.toggled .sidebar-wrapper {
+    width: 250px;
+  }
+  .page-content-wrapper {
+    padding: 20px;
+    position: relative;
+  }
+  .wrapper.toggled .page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
 }
 
 @keyframes App-logo-spin {

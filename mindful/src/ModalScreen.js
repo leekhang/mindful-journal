@@ -115,25 +115,27 @@ class ModalScreen extends Component {
   }
 
   render() {
-    let editor, deleteBtn, saveBtn;
+    let editor, toggleBtn, deleteBtn, saveBtn;
     if (this.props.type === 'add') {
       editor = <ModalEditor
                  type={this.props.type}
                  onChange={(value) => this.handleBody(value)}
                />;
+      toggleBtn = <Button color="light" onClick={this.toggle}>{this.props.buttonLabel}</Button>;
     } else {
       editor = <ModalEditor
                  type={this.props.type}
                  value={this.props.entry.body}
                  onChange={(value) => this.handleBody(value)}
                />;
+      toggleBtn = <Button color="info" onClick={this.toggle}>{this.props.buttonLabel}</Button>
       deleteBtn = <Button color="danger" onClick={this.handleDelete}>Delete</Button>;
     }
     saveBtn = this.saveButtonRender();
 
     return (
       <div>
-        <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+        {toggleBtn}
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.handleClose}>{this.state.title}</ModalHeader>
           <ModalBody>

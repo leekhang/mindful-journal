@@ -2,17 +2,19 @@ import React, {Component} from 'react';
 import BlogPost from './BlogPost';
 
 class BlogList extends Component {
-  render() {
-    let blogPosts;
-    if (this.props.allEntries) {
-      console.log(this.props.allEntries);
-      blogPosts = Object.keys(this.props.allEntries).map((id) => {
-        let entry = this.props.allEntries[id];
-        entry.id = id;
-        return <BlogPost key={id} userId={this.props.userId} entry={entry} />
-      });
-    }
-      return <div className='container'>{blogPosts}</div>
+
+    render() {
+      let posts = this.props.posts;
+      let postItems = Object.keys(posts).map(function(key) {
+        let postKey = key; 
+        let postValue = posts[key];
+        postValue.id = postKey;
+        //console.log(postKey);
+        //console.log(postValue.id);
+        return <BlogPost key={postValue.id} userId={postValue.id} entry={postValue} />
+      })
+  
+      return <div className='container'>{postItems}</div>
     }
   }
   

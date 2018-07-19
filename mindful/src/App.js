@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import UserAuth from './UserAuth';
 import HomePage from './HomePage';
 import firebase from 'firebase/app';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import LoginPage from './LoginPage';
+
 
 class App extends Component {
     constructor(props) {
@@ -19,8 +20,10 @@ class App extends Component {
         this.removeListenerFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
             if (firebaseUser) { //if exists, then logged in
                 console.log("User has logged in: ", firebaseUser.email);
+                console.log('firebaseUser: ' + firebaseUser);
                 this.setState({ user: firebaseUser });
-            } else {
+            }
+            else {
                 console.log("User has logged out");
                 this.setState({ user: undefined });
             }
@@ -63,9 +66,6 @@ class App extends Component {
         this.setState({ errorMessage: null }); //clear old error
 
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            // THEN pull user journal entries from database
-            // pass this as prop into homepage to render journal entries
-            // .then(firebase.database)
             .catch((err) => {
                 console.log(err);
                 this.setState({ errorMessage: err.message });
@@ -82,53 +82,37 @@ class App extends Component {
     }
 
     render() {
-        if (this.state.user) console.log(firebase.auth().currentUser.uid);
         let welcomePageFunction = (routerProps) => {
             if (this.state.user) {
-                return (
-                    <HomePage 
-                        userId={firebase.auth().currentUser.uid}
-                        signOutCallback={() => this.handleSignOut()}
-                    />
-                );
-                // return (<Redirect to={`/${this.state.username}`} />);
+                return (<HomePage userId={this.state.user.uid} signOutCallback={() => this.handleSignOut()} />);
             } else {
-                return (<UserAuth changeCallback={(e) => { this.handleChange(e) }}
+                return (<LoginPage changeCallback={(e) => { this.handleChange(e) }}
                     signUpCallback={() => { this.handleSignUp() }}
                     signInCallback={() => { this.handleSignIn() }}
                     userInfo={this.state} />);
             }
         };
 
-        // NEED TO CHECK THIS FUNCTION
         let homePageFunction = () => {
             if (this.state.user) {
-                return (
-                    <HomePage 
-                        userId={firebase.auth().currentUser.uid}
-                        signOutCallback={() => this.handleSignOut()}
-                    />
-                );
+                return (<HomePage userId={this.state.user.uid} signOutCallback={() => this.handleSignOut()} />);
             } else {
-                return (
-                    <UserAuth
-                        changeCallback={(e) => { this.handleChange(e) }}
-                        signUpCallback={() => { this.handleSignUp() }}
-                        signInCallback={() => { this.handleSignIn() }}
-                        userInfo={this.state}
-                    />
-                
-                );
+                return (<LoginPage changeCallback={(e) => { this.handleChange(e) }}
+                    signUpCallback={() => { this.handleSignUp() }}
+                    signInCallback={() => { this.handleSignIn() }}
+                    userInfo={this.state} />);
             }
         }
 
         return (
             <div className="App">
+            <BrowserRouter>
                 <Switch> {/* Here is where you would add another page/component with pathway */}
                     <Route exact path='/' render={welcomePageFunction} />
                     <Route path='/:username' render={homePageFunction} />
                     <Redirect to='/' /> {/* Redirect to '/' when nonexisting urls are inputted */}
                 </Switch>
+                </BrowserRouter>
             </div>
         );
     }
