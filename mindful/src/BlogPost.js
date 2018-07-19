@@ -4,6 +4,7 @@ import ModalScreen from './ModalScreen';
 class BlogPost extends Component {
 
   render() {
+    console.log('in blogpost');
     let date = new Date(this.props.entry.date);
     let title = this.props.entry.title;
     let emotion = this.props.entry.emotion;
@@ -19,10 +20,10 @@ class BlogPost extends Component {
           type="edit"
         />
         <div className='row sticky-top bg-light pt-3'>
-          <div className='col-sm-1 offset-2'>
+          <div className='col-sm-2 offset-1'>
             <span className='date blog-post-meta text-muted'>{months[numDate]} {date.getDate()}</span>
           </div>
-          <div className='col-sm-8'>
+          <div className='col-sm-9'>
             <h2 className='post-title blog-post-title'>{title}</h2>
           </div>
         </div>

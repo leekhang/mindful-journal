@@ -98,16 +98,16 @@ class ModalScreen extends Component {
     let emptyConditions = (this.state.title === '') 
                           || (this.state.date === '') 
                           || (this.state.body === '');
-    let unChangedConditions;
-    if (this.props.type === 'edit') {
-      unChangedConditions = (this.state.title === this.props.entry.title) 
-                          && (this.state.date === this.props.entry.date) 
-                          && (this.state.body === this.props.entry.body);
-    } else {
-      unChangedConditions = true;
-    }
+    // let unChangedConditions;
+    // if (this.props.type === 'edit') {
+    //   unChangedConditions = (this.state.title === this.props.entry.title) 
+    //                       && (this.state.date === this.props.entry.date) 
+    //                       && (this.state.body === this.props.entry.body);
+    // } else {
+    //   unChangedConditions = true;
+    // }
     
-    if (emptyConditions || unChangedConditions) {
+    if (emptyConditions) {
       return <Button color="danger" disabled onClick={this.handleSave}>Save</Button>;
     } else {
       return <Button color="danger" onClick={this.handleSave}>Save</Button>;
@@ -215,7 +215,7 @@ class ModalScreen extends Component {
     }
 
     if (this.props.type === 'add') {
-      this.resetState();
+      this.resetStateToNone();
     }
     this.toggle();
   }
