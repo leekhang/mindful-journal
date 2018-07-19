@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import ModalScreen from './ModalScreen';
-import { stateToHTML } from 'draft-js-export-html';
-import { convertToRaw, convertFromRaw } from 'draft-js';
 
 class BlogPost extends Component {
-  constructor(props) {
-    super(props);
-
-  }
 
   render() {
     let date = new Date(this.props.entry.date);
@@ -34,7 +28,7 @@ class BlogPost extends Component {
         </div>
         <div className='row'>
           <div className='col-sm-8 offset-3'>
-            <span className='emation-tags d-inline-block badge badge-secondary mr-2 hover'></span>
+            <span className='emation-tags d-inline-block badge badge-secondary mr-2 hover'>{emotion}</span>
             <div dangerouslySetInnerHTML={{__html: this.props.entry.body + ''}} />
           </div>
         </div>

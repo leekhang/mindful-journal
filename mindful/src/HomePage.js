@@ -18,7 +18,6 @@ export default class UserHome extends Component {
   componentDidMount() {
     this.unregFunc = firebase.database().ref(`users/${this.props.userId}/`);
     this.unregFunc.on('value', (snapshot) => {
-      console.log('database snapshot: ' + snapshot.val());
       this.setState({ allEntries: snapshot.val() });
     });
   }
@@ -33,7 +32,6 @@ export default class UserHome extends Component {
 
   // Renders the view of the home screen for the user
   render() {
-    let testId = 'LHgmQ_nb0tsyep1qNRF';
     return (
       <div>
         <h1>You are now logged in!</h1>
