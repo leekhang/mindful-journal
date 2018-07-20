@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
+//import 'bootstrap/dist/css/bootstrap.css'; //bootstrap
 
 // Firebase imports/config
 import firebase from 'firebase/app';
