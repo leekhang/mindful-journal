@@ -106,13 +106,13 @@ class App extends Component {
 
     return (
       <div className="App">
-        {/* <HashRouter basename={process.env.PUBLIC_URL + '/'}> */}
+        <BrowserRouter basename={process.env.PUBLIC_URL + '/'}>
           <Switch> {/* Here is where you would add another page/component with pathway */}
             <Route exact path='/' render={welcomePageFunction} />
             <Route path='/:username' render={homePageFunction} />
             <Redirect to='/' /> {/* Redirect to '/' when nonexisting urls are inputted */}
           </Switch>
-        {/* </HashRouter> */}
+        </BrowserRouter>
       </div>
     );
   }

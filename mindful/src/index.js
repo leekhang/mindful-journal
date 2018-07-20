@@ -25,7 +25,5 @@ var config = {
 };
 firebase.initializeApp(config);
 
-ReactDOM.render(<BrowserRouter basename={process.env.PUBLIC_URL + '/'}><App /></BrowserRouter>
-                , document.getElementById('root'));
-
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
