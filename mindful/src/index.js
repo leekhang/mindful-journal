@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 // Firebase imports/config
@@ -25,9 +25,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
-ReactDOM.render(<HashRouter basename={process.env.PUBLIC_URL + '/'}>
-                  <App />
-                </HashRouter>
+ReactDOM.render(<BrowserRouter basename={process.env.PUBLIC_URL + '/'}><App /></BrowserRouter>
                 , document.getElementById('root'));
 
 registerServiceWorker();
